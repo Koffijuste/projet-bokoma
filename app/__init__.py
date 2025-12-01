@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template  # ✅ render_template ici (pas en double)
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
@@ -9,8 +10,14 @@ from .extensions import db, login_manager, migrate  # ✅ Import des extensions
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = '-secret-Bonneheureuseanneebokoma-stor-key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/bokoma.db'
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+
+    database_url = os.environ.get('DATABASE_URL')
+    if database_url:
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    else:
+        database_url = 'sqlite:///../instance/bokoma.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Initialisation des extensions
