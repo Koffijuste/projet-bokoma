@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}500 – Erreur serveur{% endblock %}
+
+{% block content %}
+<div class="container py-5 text-center" style="min-height: 70vh;">
+    <div class="display-1 text-danger mb-4">500</div>
+    <h2 class="mb-3">Erreur serveur interne</h2>
+    <p class="text-muted mb-4">Une erreur inattendue s’est produite. Notre équipe technique est informée.</p>
+    <div class="d-flex justify-content-center gap-3">
+        <a href="{{ url_for('main.index') }}" class="btn btn-secondary">Retour à l’accueil</a>
+        <a href="https://wa.me/243XXXXXXXXX" class="btn btn-success" target="_blank">
+            <i class="bi bi-whatsapp me-1"></i> Nous contacter
+        </a>
+    </div>
+</div>
+{% endblock %}

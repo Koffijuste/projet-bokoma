@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Contact – BOKOMA-STOR{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mb-5">
+            <h1 class="mb-3">Nous contacter</h1>
+            <p class="lead text-muted">
+                Une question ? Une commande personnalisée ? Nous sommes là pour vous !
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <!-- Colonne gauche : Informations de contact -->
+        <div class="col-md-6" data-aos="fade-right">
+            <h3>Coordonnées</h3>
+            <ul class="list-unstyled mt-4 fs-5">
+                <li class="mb-3">
+                    <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                    Abidjan, Côte d'Ivoire
+                </li>
+                <li class="mb-3">
+                    <i class="bi bi-whatsapp text-success me-2"></i>
+                    <a href="https://wa.me/2250173324157" target="_blank" class="text-decoration-none">
+                        +225 0173324157
+                    </a>
+                </li>
+                <li class="mb-3">
+                    <i class="bi bi-envelope-fill me-2"></i>
+                    contact@bokoma-stor.com
+                </li>
+                <li class="mb-3">
+                    <i class="bi bi-clock-fill me-2"></i>
+                    Du lundi au samedi, 8h – 18h (GMT+1)
+                </li>
+            </ul>
+
+            <h4 class="mt-5">Suivez-nous</h4>
+            <div class="d-flex mt-3">
+                <a href="#" class="btn btn-outline-dark rounded-circle me-2"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="btn btn-outline-dark rounded-circle me-2"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="btn btn-outline-dark rounded-circle me-2"><i class="bi bi-snapchat"></i></a>
+                <a href="#" class="btn btn-outline-dark rounded-circle"><i class="bi bi-tiktok"></i></a>
+            </div>
+        </div>
+
+        <!-- Colonne droite : Formulaire -->
+        <div class="col-md-6" data-aos="fade-left">
+            <h3>Envoyez-nous un message</h3>
+            <p class="text-muted mt-2">Nous vous répondrons sous 24h en semaine.</p>
+
+            <!-- Formulaire (statique – pas de backend email ici, mais tu peux l’ajouter plus tard) -->
+            <form id="contactForm" class="mt-4" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nom complet</label>
+                    <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Sujet</label>
+                    <select class="form-select" id="subject" required>
+                        <option value="">Sélectionnez...</option>
+                        <option value="commande">Question sur une commande</option>
+                        <option value="produit">Demande produit personnalisé</option>
+                        <option value="retour">Retour ou réclamation</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Envoyer le message</button>
+            </form>
+
+            <!-- Message de succès (caché par défaut) -->
+            <div id="successMessage" class="alert alert-success mt-3" style="display: none;">
+                ✅ Merci ! Votre message a bien été envoyé.  
+                <strong>Nous vous répondrons très bientôt par WhatsApp ou email.</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script de validation et feedback -->
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Validation simple côté client
+    let valid = true;
+    const inputs = ['name', 'email', 'subject', 'message'];
+    inputs.forEach(id => {
+        if (!document.getElementById(id).value.trim()) valid = false;
+    });
+
+    if (valid) {
+        document.getElementById('successMessage').style.display = 'block';
+        this.reset();
+        // Option : envoi via emailjs, backend, etc. (à ajouter si besoin)
+    } else {
+        alert('Veuillez remplir tous les champs.');
+    }
+});
+</script>
+{% endblock %}

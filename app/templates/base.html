@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BOKOMA-STOR – Chaussures artisanales faites main au Côte d'Ivoire pour homme et femme. Élégance, confort et savoir-faire.">
+    <title>{% block title %}BOKOMA-STOR{% endblock %}</title>
+    
+    <!-- Bootstrap + AOS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Icônes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Favicon -->
+     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+     <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='android-chrome-192x192.png') }}">
+     <link rel="icon" type="image/png" sizes="512x512" href="{{ url_for('static', filename='android-chrome-512x512.png') }}">
+    <!-- Style perso -->
+    <style>
+        :root {
+            --primary: #8B4513;
+            --secondary: #D2B48C;
+            --dark: #2C1B11;
+            --light: #F8F4F0;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--light);
+            color: #333;
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: white !important;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        .btn-primary:hover {
+            background-color: var(--dark);
+        }
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('{{ url_for('static', filename='image/bottes-cuir-homme.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        }
+        footer {
+            background: var(--dark);
+            color: white;
+        }
+        footer a { color: #ddd; text-decoration: none; }
+        footer a:hover { color: var(--secondary); }
+        .footer-heading { color: var(--secondary); }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">BOKOMA-STOR</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.shop') }}">Boutique</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.login') }}">Se connecter</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.a_propos') }}">À propos</a></li>
+            </ul>
+            {% if session.user_id %}
+            <div class="dropdown">
+                <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    👤 Compte
+                </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="{{ url_for('main.cart') }}">Panier</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('main.logout') }}">Se déconnecter</a></li>
+            </ul>
+            </div>
+        {% else %}
+            <a class="btn btn-outline-light" href="{{ url_for('main.cart') }}">
+                🛒 Panier {% if session.cart %}({{ session.cart.values() | sum }}){% endif %}
+            </a>
+        {% endif %}
+        </div>
+    </div>
+</nav>
+
+<!-- Contenu principal -->
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<!-- Footer élégant -->
+<footer class="pt-5 pb-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 mb-4">
+                <h5 class="footer-heading">BOKOMA-STOR</h5>
+                <p class="text-muted">
+                    Chaussures artisanales faites main au cœur de la Côte d'Ivoire. <br>
+                    Qualité, élégance et savoir-faire transmis de génération en génération.
+                </p>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6 class="footer-heading">Légal</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{{ url_for('main.mentions_legales') }}">Mentions légales</a></li>
+                    <li><a href="{{ url_for('main.cgu') }}">CGU</a></li>
+                    <li><a href="{{ url_for('main.politique_confidentialite') }}">Confidentialité</a></li>
+                    <li><a href="{{ url_for('main.politique_retour') }}">Retours</a></li>
+                    <li><a href="{{ url_for('main.a_propos') }}">À propos</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 mb-4">
+                <h6 class="footer-heading">Contact</h6>
+                <ul class="list-unstyled text-muted">
+                    <li><i class="bi bi-geo-alt"></i> Abidjan, Côte d'Ivoire</li>
+                    <li><i class="bi bi-whatsapp"></i> +225 01 73 32 41 57</li>
+                    <li><i class="bi bi-envelope"></i> contact@bokoma-stor.com</li>
+                </ul>
+            </div>
+            <div class="col-md-3 mb-4">
+                <h6 class="footer-heading">Réseaux</h6>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-outline-light rounded-circle me-2"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="btn btn-outline-light rounded-circle me-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="btn btn-outline-light rounded-circle me-2"><i class="bi bi-snapchat"></i></a>
+                    <a href="#" class="btn btn-outline-light rounded-circle"><i class="bi bi-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr class="bg-light my-4">
+        <div class="text-center text-muted">
+            &copy; 2025 BOKOMA-STOR – Tous droits réservés.
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+</body>
+</html>

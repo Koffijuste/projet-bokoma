@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Se connecter – BOKOMA-STOR{% endblock %}
+
+{% block content %}
+<div class="container py-5" style="min-height: 70vh;">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">Se connecter</h2>
+                    <p class="text-center text-muted mb-4">Accédez à votre compte</p>
+
+                    <!-- Messages d'erreur (si implémentés) -->
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ msg }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <!-- Formulaire de connexion -->
+                    <form method="POST" action="{{ url_for('main.login') }}">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+                        <input type="hidden" name="next" value="{{ request.args.get('next', '') }}">
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="mb-0">Pas encore de compte ?</p>
+                        <a href="{{ url_for('main.register') }}" class="text-decoration-none">Créer un compte</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

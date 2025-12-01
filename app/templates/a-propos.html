@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}À propos – BOKOMA-STOR{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6" data-aos="fade-right">
+            <h1 class="mb-4">L’histoire de BOKOMA-STOR</h1>
+            <p class="lead">
+                Depuis 2015, nous créons des chaussures artisanales à Abidjan, avec passion et savoir-faire.
+            </p>
+            <p>
+                Le mot <strong>« BOKOMA »</strong> signifie <em style="color: black;">« Boussou  Kouadio Marc Arsène »</em> <h5>le nom du propriétaire</h5>.
+                Chaque paire est <strong>faite main</strong>, pièce par pièce, par des artisans Ivoiriens formés.
+            </p>
+            <p>
+                Nous travaillons avec des cuirs locaux, des tissus traditionnels et des matériaux durables, 
+                pour allier élégance, confort et respect de l’identité culturelle.
+            </p>
+            <a href="{{ url_for('main.shop') }}" class="btn btn-primary mt-3">Découvrir nos créations</a>
+        </div>
+        <div class="col-md-6 mt-4 mt-md-0" data-aos="fade-left">
+            <img src="{{ url_for('static', filename='images/atelier.jpg') }}" 
+                 class="img-fluid rounded shadow" 
+                 alt="Artisans de BOKOMA-STOR en train de coudre des chaussures"
+                 style="object-fit: cover; height: 350px; width: 100%;">
+        </div>
+    </div>
+
+    <div class="row text-center mb-5">
+        <div class="col-md-4 mb-4">
+            <div class="display-4 text-primary">5000+</div>
+            <p class="text-muted">Paires vendues</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="display-4 text-primary">30+</div>
+            <p class="text-muted">Artisans formés</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="display-4 text-primary">100%</div>
+            <p class="text-muted">Fait main en Côte d'Ivoire</p>
+        </div>
+    </div>
+
+    <div class="bg-light p-5 rounded text-center">
+        <h2>Notre engagement</h2>
+        <p class="mt-3">
+            Chaque achat chez BOKOMA-STOR soutient directement des familles d’artisans en Côte d'Ivoire.
+            Nous croyons au commerce équitable, à la qualité durable, et à la fierté du « made in Ivory Coast ».
+        </p>
+    </div>
+</div>
+{% endblock %}
