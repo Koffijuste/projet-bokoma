@@ -1,2 +1,2 @@
 # Procfile
-web: gunicorn -k gevent --worker-connections 1000 --workers 1 -b 0.0.0.0:$PORT run:app
+web: gunicorn -k gevent==22.10.2 --worker-connections 1000 --workers 1 -b 0.0.0.0:$PORT run:app

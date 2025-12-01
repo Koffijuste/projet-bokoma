@@ -1,12 +1,10 @@
-# render.yaml
-
 services:
   - type: web
     name: bokoma-stor
     env: python
     region: frankfurt        # ou 'oregon' si tu veux un serveur US
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn -k gevent --worker-connections 1000 --workers 1 -b 0.0.0.0:$PORT run:app"
+    startCommand: "gunicorn -k gevent==22.10.2 --worker-connections 1000 --workers 1 -b 0.0.0.0:$PORT run:app"
     envVars:
       - key: SECRET_KEY
         generateValue: true    # Render génère une clé aléatoire sécurisée
@@ -22,12 +20,14 @@ services:
         generateValue: true    # Change via Render dashboard après 1er déploiement
 
     # Optionnel : domaine personnalisé
-    # domains:
-    #   - domain: www.bokoma-stor.com
-    #   - domain: bokoma-stor.com
+        domains:
+         - domain: www.bokoma-stor.com
+         - domain: bokoma-stor.com
 
 databases:
   - name: bokoma-db
     databaseName: bokoma_stor_db
     user: bokoma_user
     region: frankfurt
+
+runtime: python3.11
