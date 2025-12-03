@@ -5,6 +5,8 @@ Flask-Admin==1.6.1
 Flask-Migrate==4.0.7
 python-dotenv==1.0.1
 gunicorn==22.0.0
+
+# Correctifs Python 3.13 :
 psycopg2-binary==2.9.10
-gevent==22.10.2
-greenlet==2.0.2
+gevent==24.2.1
+greenlet==3.0.3
