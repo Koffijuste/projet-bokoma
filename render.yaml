@@ -4,7 +4,7 @@ services:
     env: python
     region: frankfurt        # ou 'oregon' si tu veux un serveur US
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn -k gevent==22.10.2 --worker-connections 1000 --workers 1 -b 0.0.0.0:$PORT run:app"
+    startCommand: "gunicorn --workers 1 -b 0.0.0.0:$PORT run:app"
     envVars:
       - key: SECRET_KEY
         generateValue: true    # Render génère une clé aléatoire sécurisée
