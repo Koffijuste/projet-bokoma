@@ -1,5 +1,5 @@
 from flask_admin import AdminIndexView
-from flask_admin.contrib.sql, ModelView
+from flask_admin.contrib.sqla import ModelView
 from flask import request, Response
 from werkzeug.exceptions import HTTPException
 import os
