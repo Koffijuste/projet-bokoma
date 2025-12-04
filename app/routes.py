@@ -95,19 +95,17 @@ def cart():
     cart_items = []
     total = 0
 
-    # --- Lecture CORRECTE des articles ---
+    # --- Lecture des articles ---
     for product_id_str, item_data in cart_data['items'].items():
         try:
             product = Product.query.get(int(product_id_str))
             if not product:
                 continue
 
-            # ✅ Vérifie que les clés existent
             size = item_data.get('size', 'Non spécifiée')
             color = item_data.get('color', 'Non spécifiée')
             quantity = item_data.get('quantity', 1)
 
-            # Ajoute l'article à la liste
             cart_items.append({
                 'product': product,
                 'size': size,
@@ -124,51 +122,58 @@ def cart():
     shipping = 1500 if shipping_country == 'CIV' else 7500
     total_with_shipping = total + shipping
 
-    # --- Génération du message WhatsApp ---
+    # --- Génération du message WhatsApp avec LIENS IMAGES ---
     order_lines = []
     for item in cart_items:
-        line = f"- {item['product'].name} ({item['size']} / {item['color']}) x{item['quantity']}"
+        product = item['product']
+        line = f"• {product.name} ({item['size']} / {item['color']}) x{item['quantity']}"
+        
+        # ✅ Ajoute le lien de l'image si disponible
+        if product.image_url and product.image_url.strip():
+            image_link = product.image_url.strip()
+            # Vérifie que c'est une URL absolue
+            if image_link.startswith(('http://', 'https://')):
+                line += f"\n  📷 {image_link}"
+            else:
+                # Fallback : construit URL public Render (si besoin)
+                line += f"\n  📷 https://bokoma-stor.onrender.com/static/{image_link}"
+        
         order_lines.append(line)
-    
-    order_details = "%0A".join(order_lines)  # %0A = saut de ligne
 
-    # ✅ Message complet
+    order_details = "\n".join(order_lines)
+
+    # ✅ Message WhatsApp complet et professionnel
     whatsapp_message = (
-        "📦 *Nouvelle commande — Confirmation*\n\n"
+        "📦 *NOUVELLE COMMANDE — BOKOMA-STOR*\n\n"
         "👤 *Informations client*\n"
         f"• Nom : *{user.username}*\n"
         f"• Numéro : *{user.phone or 'Non fourni'}*\n\n"
-
         "🛍️ *Détails de la commande*\n"
+        f"{order_details}\n\n"
         "💰 *Résumé du paiement*\n"
         f"• Total produits : *{total:,.0f} FCFA*\n"
         f"• Livraison : *{shipping:,.0f} FCFA* "
         f"({ '🇨🇮 Côte d’Ivoire' if shipping_country == 'CIV' else '🌍 International' })\n"
-        f"• *Total à payer : {total_with_shipping:,.0f} FCFA*\n\n"
-
-        "Merci 🙏\n"
-        "Veuillez confirmer pour finaliser la commande."
+        f"• *TOTAL À PAYER : {total_with_shipping:,.0f} FCFA*\n\n"
+        "🙏 Merci pour votre commande !\n"
+        "Veuillez confirmer pour finaliser."
     )
 
-    # ✅ Encode UNE SEULE FOIS, proprement
+    # ✅ Encodage fiable pour WhatsApp
     whatsapp_encoded = urllib.parse.quote(whatsapp_message, safe='')
-    print("\n=== DEBUG MESSAGE ===")
-    print("Raw message:")
-    print(whatsapp_message)
-    print("\nEncoded URL:")
-    print(f"https://wa.me/2250173324157?text={whatsapp_encoded}")
-    print("=== END DEBUG ===\n")
+
+    # 🔍 Optionnel : debug (à supprimer en production)
+    # print("\n=== MESSAGE FINAL ===\n", whatsapp_message, "\n=== END ===\n")
 
     return render_template(
         'cart.html',
         user=user,
-        items=cart_items,  # ← liste d'articles simplifiée
+        items=cart_items,
         total=total,
         shipping=shipping,
-        shipping_country=cart_data['shipping_country'],
+        shipping_country=shipping_country,
         total_with_shipping=total_with_shipping,
-        message=whatsapp_message,
-        whatsapp_encoded=whatsapp_encoded
+        whatsapp_encoded=whatsapp_encoded  # ⚠️ Utilisé dans le template
     )
 
 @main.route('/add-to-cart/<int:product_id>', methods=['POST'])

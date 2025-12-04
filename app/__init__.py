@@ -1,4 +1,5 @@
 import os
+from werkzeug.middleware.shared_data import SharedDataMiddleware
 from flask import Flask, render_template  # ✅ render_template ici (pas en double)
 from flask_sqlalchemy import SQLAlchemy
 from flask_admin import Admin
@@ -19,7 +20,7 @@ def create_app():
         database_url = 'sqlite:///../instance/bokoma.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+    
     # Initialisation des extensions
     db.init_app(app)
     login_manager.init_app(app)

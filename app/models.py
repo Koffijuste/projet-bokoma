@@ -12,7 +12,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     category = db.Column(db.String(50), nullable=False)  # "Homme", "Femme", "Cuir", etc.
     material = db.Column(db.String(50))
-    image_url = db.Column(db.String(200), default="image/default.jpg")
+    image_url = db.Column(db.String(200), default="https://i.ibb.co/nN1nb9sz/default.jpg")
     in_stock = db.Column(db.Boolean, default=True)
 
 class User(db.Model, UserMixin):
