@@ -25,7 +25,7 @@
                     {% for item in items %}
                     <tr>
                         <td>
-                            <img src="{{ url_for('static', filename=item.product.image_url) if item.product.image_url and item.product.image_url != 'images/default.jpg' else 'https://via.placeholder.com/50x50' }}" 
+                            <img src="{{ product.image_url or 'https://via.placeholder.com/500x500/8B4513/FFFFFF?text=' + (product.name | urlencode) }}" 
                                  alt="{{ item.product.name }}" width="50" class="me-3 rounded">
                             {{ item.product.name }}
                         </td>
