@@ -7,48 +7,34 @@
     <div class="container">
         <h1 class="mb-4">Notre collection</h1>
 
-        <!-- Filtres de catégories -->
+        <!-- Filtres -->
         <div class="mb-4 d-flex flex-wrap gap-2">
-            <a href="{{ url_for('main.shop') }}" 
-               class="btn btn-sm {% if not request.args.get('category') %}btn-dark{% else %}btn-outline-dark{% endif %}">
-                Toutes
-            </a>
+            <a href="{{ url_for('main.shop') }}" class="btn btn-sm {% if not request.args.get('category') %}btn-dark{% else %}btn-outline-dark{% endif %}">Toutes</a>
             {% for cat in categories %}
-            <a href="{{ url_for('main.shop', category=cat) }}" 
-               class="btn btn-sm {% if request.args.get('category') == cat %}btn-dark{% else %}btn-outline-dark{% endif %}">
-                {{ cat }}
-            </a>
+            <a href="{{ url_for('main.shop', category=cat) }}" class="btn btn-sm {% if request.args.get('category') == cat %}btn-dark{% else %}btn-outline-dark{% endif %}">{{ cat }}</a>
             {% endfor %}
         </div>
 
-        <!-- Affichage des produits -->
+        <!-- Produits -->
         {% if products %}
         <div class="row g-4">
-            {% for product in products %}
-            <div class "col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 50 }}">
-                <div class="card card-hover h-100 shadow-sm">
-                    <!-- ✅ Image publique ou placeholder -->
-                    <img src="{{ product.image_url or 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=' + (product.name | urlencode) }}"
-                         class="card-img-top" 
-                         alt="{{ product.name }}" 
-                         style="height: 200px; object-fit: cover;"
-                         onerror="this.src='https://via.placeholder.com/300x200/8B4513/FFFFFF?text=Image+non+disponible'">
+            {% for item in products %}
+            <div class="col-lg-3 col-md-4 col-sm-6" data-aos="fade-up" data-aos-delay="{{ loop.index0 * 50 }}">
+                <div class="card card-hover h-100">
+                    <img src="{{ item.image_url or 'https://via.placeholder.com/300x200/8B4513/FFFFFF?text=' + (item.name | urlencode) }}"  
+                         class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
                     <div class="card-body d-flex flex-column">
-                        <h6 class="card-title">{{ product.name }}</h6>
-                        <p class="text-muted small">{{ product.material or '' }}</p>
-                        <p class="mt-auto"><strong>{{ "{:,.0f}".format(product.price) }} FCFA</strong></p>
-                        <a href="{{ url_for('main.product', id=product.id) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                        <h6 class="card-title">{{ item.name }}</h6>
+                        <p class="text-muted small">{{ item.material or '' }}</p>
+                        <p class="mt-auto"><strong>{{ "{:,.0f}".format(item.price) }} FCFA</strong></p>
+                        <a href="{{ url_for('main.product', id=item.id) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <div class="text-center py-5">
-            <i class="bi bi-search" style="font-size: 4rem; color: #ddd;"></i>
-            <h3 class="mt-3">Aucun produit dans cette catégorie</h3>
-            <a href="{{ url_for('main.shop') }}" class="btn btn-primary mt-3">Voir toute la collection</a>
-        </div>
+        <p class="text-muted">Aucun produit dans cette catégorie.</p>
         {% endif %}
     </div>
 </div>
