@@ -25,7 +25,7 @@
                     {% for item in items %}
                     <tr>
                         <td>
-                            <img src="{{ product.image_url or 'https://via.placeholder.com/500x500/8B4513/FFFFFF?text=' + (product.name | urlencode) }}" 
+                            <img src="{{ item.product.image_url or 'https://via.placeholder.com/500x500/8B4513/FFFFFF?text=' + (item.product.name | urlencode) }}" 
                                  alt="{{ item.product.name }}" width="50" class="me-3 rounded">
                             {{ item.product.name }}
                         </td>
