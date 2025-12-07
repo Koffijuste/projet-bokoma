@@ -18,7 +18,7 @@
 
                 {% if product.in_stock %}
                     <!-- Formulaire d'ajout au panier -->
-                    <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}">
+                    <form method="POST" action="{{ url_for('main.add_to_cart', product_id=product.id) }}">
                         <div class="mb-3">
                             <label class="form-label">Pointure</label>
                             <select name="size" class="form-select" required>
@@ -57,7 +57,7 @@
             </div>
         </div>
 
-        <a href="{{ url_for('shop') }}" class="btn btn-link mt-4">&larr; Retour à la boutique</a>
+        <a href="{{ url_for('main.shop') }}" class="btn btn-link mt-4">&larr; Retour à la boutique</a>
     </div>
 </div>
 {% endblock %}

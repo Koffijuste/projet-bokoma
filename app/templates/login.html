@@ -24,7 +24,7 @@
                     {% endwith %}
 
                     <!-- Formulaire de connexion -->
-                    <form method="POST" action="{{ url_for('login') }}">
+                    <form method="POST" action="{{ url_for('main.login') }}">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" id="email" name="email" required>
@@ -39,7 +39,7 @@
 
                     <div class="text-center mt-4">
                         <p class="mb-0">Pas encore de compte ?</p>
-                        <a href="{{ url_for('register') }}" class="text-decoration-none">Créer un compte</a>
+                        <a href="{{ url_for('main.register') }}" class="text-decoration-none">Créer un compte</a>
                     </div>
                 </div>
             </div>

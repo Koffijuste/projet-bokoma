@@ -21,68 +21,96 @@
      <link rel="icon" type="image/png" sizes="512x512" href="{{ url_for('static', filename='android-chrome-512x512.png') }}">
     <!-- Style perso -->
     <style>
-        :root {
-            --primary: #8B4513;
-            --secondary: #D2B48C;
-            --dark: #2C1B11;
-            --light: #F8F4F0;
-        }
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--light);
-            color: #333;
-        }
-        .navbar-brand {
-            font-weight: 700;
-            color: white !important;
-        }
-        .btn-primary {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-        .btn-primary:hover {
-            background-color: var(--dark);
-        }
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('{{ url_for('static', filename='image/bottes-cuir-homme.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            height: 60vh;
-            display: flex;
-            align-items: center;
-        }
-        .card-hover {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .card-hover:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.15);
-        }
-        footer {
-            background: var(--dark);
-            color: white;
-        }
-        footer a { color: #ddd; text-decoration: none; }
-        footer a:hover { color: var(--secondary); }
-        .footer-heading { color: var(--secondary); }
-    </style>
+    :root {
+        --primary: #FF0000;       /* Rouge du logo */
+        --secondary: #FFFFFF;     /* Blanc */
+        --dark: #000000;          /* Noir */
+        --light: #F5F5F5;         /* Gris très clair pour le fond */
+    }
+    body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        background-color: var(--light);
+        color: #333;
+    }
+    
+    /* Navbar */
+    .navbar-brand {
+        font-weight: 700;
+        color: white !important;
+    }
+    .navbar-dark .navbar-nav .nav-link {
+        color: rgba(255, 255, 255, 0.85) !important;
+    }
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: white !important;
+    }
+    .btn-primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #cc0000; /* Rouge plus foncé au survol */
+        border-color: #cc0000;
+    }
+
+    /* Hero section */
+    .hero {
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                    url('{{ url_for('static', filename='images/bottes-cuir-homme.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        height: 60vh;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Cards */
+    .card-hover {
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border: 1px solid #eee;
+    }
+    .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+        border-color: var(--primary);
+    }
+
+    /* Footer */
+    footer {
+        background: var(--dark);
+        color: white;
+    }
+    footer a {
+        color: #ddd;
+        text-decoration: none;
+    }
+    footer a:hover {
+        color: var(--secondary); /* Blanc au survol */
+        text-decoration: underline;
+    }
+    .footer-heading {
+        color: var(--primary); /* Rouge pour les titres */
+        font-weight: 600;
+    }
+</style>
 </head>
 <body>
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="{{ url_for('index') }}">BOKOMA-STORE</a>
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">BOKOMA-STORE</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('shop') }}">Boutique</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Se connecter</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ url_for('a_propos') }}">À propos</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.index') }}">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.shop') }}">Boutique</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.login') }}">Se connecter</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('main.a_propos') }}">À propos</a></li>
             </ul>
             {% if session.user_id %}
             <div class="dropdown">
@@ -90,12 +118,12 @@
                     👤 Compte
                 </a>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="{{ url_for('cart') }}">Panier</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Se déconnecter</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('main.cart') }}">Panier</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('main.logout') }}">Se déconnecter</a></li>
             </ul>
             </div>
         {% else %}
-            <a class="btn btn-outline-light" href="{{ url_for('cart') }}">
+            <a class="btn btn-outline-light" href="{{ url_for('main.cart') }}">
                 🛒 Panier {% if session.cart %}({{ session.cart.values() | sum }}){% endif %}
             </a>
         {% endif %}
@@ -114,24 +142,24 @@
         <div class="row">
             <div class="col-md-2 mb-4">
                 <h5 class="footer-heading">BOKOMA-STORE</h5>
-                <p class="text-muted">
+                <p class="text-light">
                     Chaussures artisanales faites main au cœur de la Côte d'Ivoire. <br>
                     Qualité, élégance et savoir-faire transmis de génération en génération.
                 </p>
             </div>
             <div class="col-md-2 mb-4">
                 <h6 class="footer-heading">Légal</h6>
-                <ul class="list-unstyled">
-                    <li><a href="{{ url_for('mentions_legales') }}">Mentions légales</a></li>
-                    <li><a href="{{ url_for('cgu') }}">CGU</a></li>
-                    <li><a href="{{ url_for('politique_confidentialite') }}">Confidentialité</a></li>
-                    <li><a href="{{ url_for('politique_retour') }}">Retours</a></li>
-                    <li><a href="{{ url_for('a_propos') }}">À propos</a></li>
+                <ul class="list-unstyled text-light">
+                    <li><a href="{{ url_for('main.mentions_legales') }}">Mentions légales</a></li>
+                    <li><a href="{{ url_for('main.cgu') }}">CGU</a></li>
+                    <li><a href="{{ url_for('main.politique_confidentialite') }}">Confidentialité</a></li>
+                    <li><a href="{{ url_for('main.politique_retour') }}">Retours</a></li>
+                    <li><a href="{{ url_for('main.a_propos') }}">À propos</a></li>
                 </ul>
             </div>
             <div class="col-md-2 mb-4">
                 <h6 class="footer-heading">Contact</h6>
-                <ul class="list-unstyled text-muted" style="color: #ddd;">
+                <ul class="list-unstyled text-light" style="color: white;">
                     <li><i class="bi bi-geo-alt"></i> Abidjan, Côte d'Ivoire</li>
                     <li><i class="bi bi-whatsapp"></i> +225 01 73 32 41 57</li>
                     <li><i class="bi bi-envelope"></i> contact@bokoma-store.com</li>
@@ -140,15 +168,17 @@
             <div class="col-md-3 mb-4">
                 <h6 class="footer-heading">Réseaux</h6>
                 <div class="d-flex">
-                    <a href="#" class="btn btn-outline-light rounded-circle me-2"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="btn btn-outline-light rounded-circle me-2"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="btn btn-outline-light rounded-circle me-2"><i class="bi bi-snapchat"></i></a>
-                    <a href="www.tiktok.com/@bokomastore57" class="btn btn-outline-light rounded-circle"><i class="bi bi-tiktok"></i></a>
+                    <a href="#" class="btn btn-outline-light rounded-circle me-2" target="_blank" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="btn btn-outline-light rounded-circle me-2" target="_blank" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="btn btn-outline-light rounded-circle me-2" target="_blank" 
+                    aria-label="snapchat" ><i class="bi bi-snapchat"></i></a>
+                    <a href="https://www.tiktok.com/@bokomastore57" class="btn btn-outline-light rounded-circle" target="_blank" 
+                    aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
                 </div>
             </div>
         </div>
         <hr class="bg-light my-4">
-        <div class="text-center text-muted">
+        <div class="text-center text-light">
             &copy; 2025 BOKOMA-STORE – Tous droits réservés.
         </div>
     </div>

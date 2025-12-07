@@ -9,9 +9,9 @@
 
         <!-- Filtres -->
         <div class="mb-4 d-flex flex-wrap gap-2">
-            <a href="{{ url_for('shop') }}" class="btn btn-sm {% if not request.args.get('category') %}btn-dark{% else %}btn-outline-dark{% endif %}">Toutes</a>
+            <a href="{{ url_for('main.shop') }}" class="btn btn-sm {% if not request.args.get('category') %}btn-dark{% else %}btn-outline-dark{% endif %}">Toutes</a>
             {% for cat in categories %}
-            <a href="{{ url_for('shop', category=cat) }}" class="btn btn-sm {% if request.args.get('category') == cat %}btn-dark{% else %}btn-outline-dark{% endif %}">{{ cat }}</a>
+            <a href="{{ url_for('main.shop', category=cat) }}" class="btn btn-sm {% if request.args.get('category') == cat %}btn-dark{% else %}btn-outline-dark{% endif %}">{{ cat }}</a>
             {% endfor %}
         </div>
 
@@ -27,7 +27,7 @@
                         <h6 class="card-title">{{ item.name }}</h6>
                         <p class="text-muted small">{{ item.material or '' }}</p>
                         <p class="mt-auto"><strong>{{ "{:,.0f}".format(item.price) }} FCFA</strong></p>
-                        <a href="{{ url_for('product', id=item.id) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
+                        <a href="{{ url_for('main.product', id=item.id) }}" class="btn btn-sm btn-outline-secondary">Voir</a>
                     </div>
                 </div>
             </div>
