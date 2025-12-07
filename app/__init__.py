@@ -12,6 +12,7 @@ from .extensions import db, login_manager, migrate  # ✅ Import des extensions
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+    database_url = os.environ.get('DATABASE_URL')
 
     if database_url:
         # Convertit postgres:// → postgresql+psycopg://
