@@ -15,7 +15,7 @@ def create_app():
 
     database_url = os.environ.get('DATABASE_URL')
     if database_url:
-        database_url = database_url.replace("postgres://", "postgresql://", 1)
+        database_url = database_url.replace("postgres://", "postgresql+psycopg://", 1)
     else:
         database_url = 'sqlite:///../instance/bokoma.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
