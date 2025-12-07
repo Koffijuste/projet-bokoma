@@ -13,9 +13,14 @@ def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
 
-    database_url = os.environ.get('DATABASE_URL')
     if database_url:
-        database_url = database_url.replace("postgres://", "postgresql+psycopg://", 1)
+        # Convertit postgres:// → postgresql+psycopg://
+        if database_url.startswith("postgres://"):
+            database_url = database_url.replace("postgres://", "postgresql+psycopg://", 1)
+
+        # Convertit postgresql:// → postgresql+psycopg://
+        elif database_url.startswith("postgresql://"):
+            database_url = database_url.replace("postgresql://", "postgresql+psycopg://", 1)
     else:
         database_url = 'sqlite:///../instance/bokoma.db'
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
