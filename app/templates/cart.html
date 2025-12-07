@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Panier – BOKOMA-STOR{% endblock %}
+{% block title %}Panier – BOKOMA-STORE{% endblock %}
 
 {% block content %}
 <div class="py-5">
@@ -43,7 +43,7 @@
         <!-- Choix de la livraison -->
         <div class="mt-4 p-4 bg-light rounded">
             <h5><i class="bi bi-truck me-2"></i>Livraison</h5>
-            <form method="POST" action="{{ url_for('main.update_shipping') }}">
+            <form method="POST" action="{{ url_for('update_shipping') }}">
                 <div class="form-check mb-2">
                     <input class="form-check-input" type="radio" name="country" id="civ" value="CIV" 
                            {% if shipping_country == 'CIV' %}checked{% endif %}>
@@ -80,11 +80,11 @@
 
         <!-- Actions -->
         <div class="mt-4 d-flex flex-wrap gap-2">
-            <a href="{{ url_for('main.shop') }}" class="btn btn-secondary">Continuer vos achats</a>
-            <a href="{{ url_for('main.clear_cart') }}" 
+            <a href="{{ url_for('shop') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Continuer vos achats</a>
+            <a href="{{ url_for('clear_cart') }}" 
                class="btn btn-outline-danger"
                onclick= "return confirm('Voulez-vous vraiment vider votre panier ?');">
-                🗑️ Vider le panier
+                <i class="bi bi-trash"></i> Vider le panier
             </a>
         </div>
 
@@ -93,7 +93,7 @@
         <div class="text-center py-5">
             <i class="bi bi-cart-x" style="font-size: 4rem; color: #ddd;"></i>
             <h3 class="mt-3">Votre panier est vide</h3>
-            <a href="{{ url_for('main.shop') }}" class="btn btn-primary mt-3">Découvrir nos chaussures</a>
+            <a href="{{ url_for('shop') }}" class="btn btn-primary mt-3"><i class="bi bi-shoe-print"></i> Découvrir nos chaussures</a>
         </div>
         {% endif %}
     </div>

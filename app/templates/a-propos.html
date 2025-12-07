@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}À propos – BOKOMA-STOR{% endblock %}
+{% block title %}À propos – BOKOMA-STORE{% endblock %}
 
 {% block content %}
 <div class="container py-5">
@@ -18,7 +18,7 @@
                 Nous travaillons avec des cuirs locaux, des tissus traditionnels et des matériaux durables, 
                 pour allier élégance, confort et respect de l’identité culturelle.
             </p>
-            <a href="{{ url_for('main.shop') }}" class="btn btn-primary mt-3">Découvrir nos créations</a>
+            <a href="{{ url_for('shop') }}" class="btn btn-primary mt-3">Découvrir nos créations</a>
         </div>
         <div class="col-md-6 mt-4 mt-md-0" data-aos="fade-left">
             <img src="{{ url_for('static', filename='images/sandal_maron_homme.jpg') }}" 
